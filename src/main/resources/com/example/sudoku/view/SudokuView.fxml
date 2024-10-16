@@ -3,17 +3,16 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sudoku.controller.SudokuController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sudoku.controller.SudokuController">
   <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="300.0" minWidth="10.0" prefWidth="212.79998779296875" />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="407.0000122070312" minWidth="10.0" prefWidth="407.0000122070312" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="300.0" minWidth="10.0" prefWidth="204.8000030517578" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="395.99999694824214" minWidth="10.0" prefWidth="395.99999694824214" />
   </columnConstraints>
   <rowConstraints>
       <RowConstraints maxHeight="95.59998168945313" minHeight="10.0" prefHeight="62.59999809265137" vgrow="SOMETIMES" />
@@ -21,11 +20,9 @@
     <RowConstraints maxHeight="370.40000457763676" minHeight="10.0" prefHeight="218.8" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <TextField GridPane.rowIndex="2" />
-      <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-      <HBox alignment="CENTER_LEFT" prefHeight="96.0" prefWidth="255.0" style="-fx-background-color: #000000;">
+      <HBox alignment="CENTER_LEFT" prefHeight="51.0" prefWidth="251.0" style="-fx-background-color: #000000;">
          <children>
-            <Label prefHeight="46.0" prefWidth="167.0" text="SUDOKU" textFill="WHITE">
+            <Label prefHeight="34.0" prefWidth="156.0" text="SUDOKU" textFill="WHITE">
                <font>
                   <Font name="Bauhaus 93" size="40.0" />
                </font>
@@ -35,17 +32,20 @@
             </Label>
          </children>
       </HBox>
-      <HBox alignment="CENTER_RIGHT" prefHeight="200.0" prefWidth="400.0" style="-fx-background-color: #000000;" GridPane.columnIndex="1">
+      <HBox alignment="CENTER_RIGHT" prefHeight="51.0" prefWidth="370.0" style="-fx-background-color: #000000;" GridPane.columnIndex="1">
          <children>
-            <Button fx:id="startGameButton" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleStartGame" prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: black; -fx-border-color: white; -fx-border-radius: 25; -fx-border-width: 4;" text="JUGAR" textFill="WHITE">
+            <Button fx:id="startGameButton" mnemonicParsing="false" onAction="#handleStartGame" prefHeight="35.0" prefWidth="75.0" style="-fx-background-color: black; -fx-border-color: white; -fx-border-radius: 50; -fx-border-width: 4;" text="JUGAR" textFill="WHITE">
                <font>
                   <Font name="Bauhaus 93" size="15.0" />
                </font>
                <HBox.margin>
-                  <Insets />
+                  <Insets right="10.0" />
                </HBox.margin>
+               <padding>
+                  <Insets left="14.0" right="10.0" />
+               </padding>
             </Button>
-            <Button fx:id="helpButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: black; -fx-border-color: white; -fx-border-radius: 50; -fx-border-width: 4;" text="AYUDA" textFill="WHITE">
+            <Button fx:id="helpButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="35.0" prefWidth="78.0" style="-fx-background-color: black; -fx-border-color: white; -fx-border-radius: 50; -fx-border-width: 4;" text="AYUDA" textFill="WHITE">
                <font>
                   <Font name="Bauhaus 93" size="15.0" />
                </font>
@@ -56,16 +56,19 @@
                   <Insets right="10.0" />
                </HBox.margin>
                <padding>
-                  <Insets left="10.0" right="10.0" />
+                  <Insets left="14.0" right="10.0" />
                </padding>
             </Button>
-            <Button fx:id="instructionsButton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="30.0" prefWidth="34.0" style="-fx-background-color: black; -fx-border-color: white; -fx-border-radius: 50; -fx-border-width: 4;" text="?" textFill="WHITE">
+            <Button fx:id="instructionsButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="35.0" style="-fx-background-color: black; -fx-border-color: white; -fx-border-radius: 50; -fx-border-width: 4;" text="?" textFill="WHITE">
                <font>
                   <Font name="Bauhaus 93" size="25.0" />
                </font>
                <HBox.margin>
                   <Insets right="20.0" />
                </HBox.margin>
+               <padding>
+                  <Insets left="6.0" right="6.0" />
+               </padding>
             </Button>
          </children>
       </HBox>
