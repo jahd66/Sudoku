@@ -80,11 +80,72 @@ public class SudokuController {
                     return null; // Rechazar cambios no permitidos
                 }));
 
+                // Agregar el evento de cambio para validar en tiempo real el número ingresado en el TextField
+                textField.textProperty().addListener((observable, oldValue, newValue) -> {
+                    validateGrid(); // Llama a la función de validación
+                });
+
                 grid.add(textField, col, row); // Agrega el TextField a la cuadrícula
             }
         }
 
+        // Restaurar visibilidad de las líneas de la cuadrícula
+        grid.setGridLinesVisible(false);
+        grid.setGridLinesVisible(true);
+
         System.out.println("Grid setup completed. Number of children: " + grid.getChildren().size()); // Mensaje de depuración
+    }
+
+    private void validateGrid() {
+        // Matrices para verificar la existencia de números en filas, columnas y bloques 2x3
+        boolean[][] rowCheck = new boolean[6][7]; // 6 filas y números del 1 al 6
+        boolean[][] colCheck = new boolean[6][7]; // 6 columnas y números del 1 al 6
+        boolean[][] blockCheck = new boolean[6][7]; // 6 bloques 2x3 y números del 1 al 6
+        boolean hasError = false; // Marca para verificar si hay algún error
+
+        // Recorre la cuadrícula y verifica las reglas del Sudoku
+        for (int row = 0; row < 6; row++) {
+            for (int col = 0; col < 6; col++) {
+                int blockIndex = (row / 2) * 2 + (col / 3); // Calcula el índice del bloque 2x3
+                TextField textField = (TextField) grid.getChildren().get(row * 6 + col);
+                String text = textField.getText();
+
+                // Si la celda no está vacía, valida el número
+                if (!text.isEmpty()) {
+                    int num = Integer.parseInt(text);
+
+                    // Verifica si el número ya está en la fila, columna o bloque
+                    if (rowCheck[row][num] || colCheck[col][num] || blockCheck[blockIndex][num]) {
+                        // Si se repite, resalta el TextField en rojo
+                        textField.setStyle("-fx-background-color: red; -fx-font-size: 18;");
+                        hasError = true; // Establece la marca de error
+                    } else {
+                        // Si no se repite, marca el número como usado
+                        rowCheck[row][num] = true;
+                        colCheck[col][num] = true;
+                        blockCheck[blockIndex][num] = true;
+                        // Restablece el estilo del TextField si es válido
+                        textField.setStyle("-fx-background-color: white; -fx-font-size: 18;");
+                    }
+                } else {
+                    // Reestablece el estilo para celdas vacías
+                    textField.setStyle("-fx-background-color: white; -fx-font-size: 18;");
+                }
+            }
+        }
+        // Si hay un error, muestra un mensaje en el StatusLabel
+        if (hasError) {
+            statusLabel.setText("Error: Número no válido en una celda.");
+
+            // Crea una alerta de error
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error de Validación");
+            alert.setHeaderText("Entrada no válida");
+            alert.setContentText("Se ha ingresado un número que ya existe en la fila, columna o bloque");
+            alert.showAndWait(); // Muestra en pantalla la alerta
+        } else {
+            statusLabel.setText(""); // Reestablece el mensaje si todo es válido
+        }
     }
 
     private void clearGrid() {
