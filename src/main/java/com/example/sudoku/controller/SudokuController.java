@@ -70,10 +70,20 @@ public class SudokuController {
                 textField.setPrefWidth(50);
                 textField.setPrefHeight(50);
                 textField.setStyle("-fx-font-size: 18;");
-                textField.setEditable(false); // Se encarga de que los campos no sean editables, es decir, solo de lectura
+
+                // Limita la entrada a números del 1 al 6
+                textField.setTextFormatter(new TextFormatter<String>(change -> {
+                    String newText = change.getControlNewText();
+                    if (newText.matches("[1-6]?")) {
+                        return change; // Permitir cambios si es un número del 1 al 6 o vacío
+                    }
+                    return null; // Rechazar cambios no permitidos
+                }));
+
                 grid.add(textField, col, row); // Agrega el TextField a la cuadrícula
             }
         }
+
         System.out.println("Grid setup completed. Number of children: " + grid.getChildren().size()); // Mensaje de depuración
     }
 
