@@ -1,9 +1,9 @@
 package com.example.sudoku.controller;
 
+import com.example.sudoku.model.SudokuModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Text;
 
 import java.util.Random;
 
@@ -25,13 +25,13 @@ public class SudokuController {
     private Label statusLabel;
 
     private Random random = new Random(); // Este método ayuda a generar números aleatorios
+    private int helpAttempts = 0; // Contador de intentos de ayuda
 
     @FXML
     public void initialize() {
         System.out.println("Initializing SudokuController..."); // Mensaje de depuración
         setupGrid();
     }
-
 
     @FXML
     private void handleStartGame() {
@@ -56,9 +56,83 @@ public class SudokuController {
         System.out.println("Starting a new game..."); // Mensaje de depuración
         clearGrid();
         setupGrid();
+        helpAttempts = 0; // Reinicia el contador de intentos de ayuda
         System.out.println("Number of children in grid: " + grid.getChildren().size()); // Mensaje de depuración
         generateSudokuNumbers(); // Este método llena la cuadrícula con números
         statusLabel.setText("¡Has iniciado un nuevo juego!");
+    }
+
+    @FXML
+    private void handleHelpButton() {
+        if (helpAttempts >= 3) {
+            // Muestra un mensaje si ya se ha alcanzado el límite de intentos
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Límite de ayuda alcanzado");
+            alert.setHeaderText(null);
+            alert.setContentText("Ya has utilizado la ayuda 3 veces. No se permite más sugerencias.");
+            alert.showAndWait();
+            return; // Sale del método si se ha alcanzado el límite de intentos
+        }
+        // Busca una celda vacía y sugiere un número
+        for (int row = 0; row < 6; row++) {
+            for (int col = 0; col < 6; col++) {
+                TextField textField = (TextField) grid.getChildren().get(row * 6 + col);
+                if (textField.getText().isEmpty()) { // Si la celda está vacía
+                    int suggestedNumber = suggestNumber(row, col); // Llama al método para sugerir un número
+                    if (suggestedNumber != -1) { // Si se encontró un número válido
+                        textField.setText(String.valueOf(suggestedNumber)); // Muestra el número sugerido
+                        textField.setStyle("-fx-background-color: green; -fx-font-size: 18;"); // Resalta la celda
+                        helpAttempts++; // Incrementa el contador de intentos de ayuda
+                    }
+                    return; // Salimos después de sugerir un número
+                }
+            }
+        }
+    }
+
+    // Método que sugiere un número válido para una celda vacía
+    private int suggestNumber(int row, int col) {
+        // Comprueba los números que ya están en la fila, columna y bloque 2x3
+        boolean[] usedNumbers = new boolean[7]; // Índices del 1 al 6
+
+        // Marcar números usados en la fila
+        for (int c = 0; c < 6; c++) {
+            TextField textField = (TextField) grid.getChildren().get(row * 6 + c);
+            if (!textField.getText().isEmpty()) {
+                int num = Integer.parseInt(textField.getText());
+                usedNumbers[num] = true; // Marca el número como usado
+            }
+        }
+
+        // Marcar números usados en la columna
+        for (int r = 0; r < 6; r++) {
+            TextField textField = (TextField) grid.getChildren().get(r * 6 + col);
+            if (!textField.getText().isEmpty()) {
+                int num = Integer.parseInt(textField.getText());
+                usedNumbers[num] = true; // Marca el número como usado
+            }
+        }
+
+        // Marcar números usados en el bloque 2x3
+        int blockRowStart = (row / 2) * 2;
+        int blockColStart = (col / 3) * 3;
+        for (int r = 0; r < 2; r++) {
+            for (int c = 0; c < 3; c++) {
+                TextField textField = (TextField) grid.getChildren().get((blockRowStart + r) * 6 + (blockColStart + c));
+                if (!textField.getText().isEmpty()) {
+                    int num = Integer.parseInt(textField.getText());
+                    usedNumbers[num] = true; // Marca el número como usado
+                }
+            }
+        }
+
+        // Sugerir un número que no esté usado
+        for (int num = 1; num <= 6; num++) {
+            if (!usedNumbers[num]) {
+                return num; // Retorna el primer número no usado
+            }
+        }
+        return -1; // Retorna -1 si no hay números disponibles
     }
 
     private void setupGrid() {

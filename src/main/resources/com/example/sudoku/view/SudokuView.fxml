@@ -45,7 +45,7 @@
                   <Insets left="14.0" right="10.0" />
                </padding>
             </Button>
-            <Button fx:id="helpButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="35.0" prefWidth="78.0" style="-fx-background-color: black; -fx-border-color: white; -fx-border-radius: 50; -fx-border-width: 4;" text="AYUDA" textFill="WHITE">
+            <Button fx:id="helpButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleHelpButton" prefHeight="35.0" prefWidth="78.0" style="-fx-background-color: black; -fx-border-color: white; -fx-border-radius: 50; -fx-border-width: 4;" text="AYUDA" textFill="WHITE">
                <font>
                   <Font name="Bauhaus 93" size="15.0" />
                </font>
