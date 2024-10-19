@@ -11,8 +11,8 @@
 
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sudoku.controller.SudokuController">
   <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="300.0" minWidth="10.0" prefWidth="204.8000030517578" />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="395.99999694824214" minWidth="10.0" prefWidth="395.99999694824214" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="407.2000244140625" minWidth="10.0" prefWidth="358.40003662109376" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="395.99999694824214" minWidth="10.0" prefWidth="241.59996337890624" />
   </columnConstraints>
   <rowConstraints>
       <RowConstraints maxHeight="95.59998168945313" minHeight="10.0" prefHeight="62.59999809265137" vgrow="SOMETIMES" />
@@ -72,9 +72,9 @@
             </Button>
          </children>
       </HBox>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="1">
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
          <children>
-            <Label fx:id="statusLabel" alignment="CENTER" prefHeight="26.0" prefWidth="362.0" style="-fx-border-color: #000000;" text="Ingresa un número del 1 al 6">
+            <Label fx:id="statusLabel" alignment="CENTER" prefHeight="40.0" prefWidth="340.0" style="-fx-border-color: #000000; -fx-border-width: 4;" text="Ingresa un número del 1 al 6">
                <font>
                   <Font name="Bauhaus 93" size="20.0" />
                </font>
@@ -105,5 +105,17 @@
             <Insets />
          </opaqueInsets>
       </GridPane>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+         <children>
+            <Button fx:id="undoButton" mnemonicParsing="false" onAction="#handleUndo" prefHeight="32.0" prefWidth="150.0" style="-fx-border-color: black; -fx-border-radius: 50; -fx-border-width: 4;" text="Deshacer Mov.">
+               <font>
+                  <Font name="Bauhaus 93" size="20.0" />
+               </font>
+               <padding>
+                  <Insets left="5.0" />
+               </padding>
+            </Button>
+         </children>
+      </HBox>
    </children>
 </GridPane>

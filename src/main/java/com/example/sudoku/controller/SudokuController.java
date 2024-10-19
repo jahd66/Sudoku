@@ -1,11 +1,11 @@
 package com.example.sudoku.controller;
 
-import com.example.sudoku.model.SudokuModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 
 import java.util.Random;
+import java.util.ArrayList;
 
 public class SudokuController {
 
@@ -26,6 +26,8 @@ public class SudokuController {
 
     private Random random = new Random(); // Este método ayuda a generar números aleatorios
     private int helpAttempts = 0; // Contador de intentos de ayuda
+    private ArrayList<String> history = new ArrayList<>(); // Historial de movimientos
+    private int historyPointer = -1; // Índice actual en el historial
 
     @FXML
     public void initialize() {
@@ -46,6 +48,7 @@ public class SudokuController {
                 handleNewGame(); // Llama al método para iniciar el juego nuevamente
             }
         });
+
 //        handleNewGame(); // Llama directamente para verificar que el método se ejecuta
 
         System.out.println("Start game button clicked!");
@@ -86,6 +89,49 @@ public class SudokuController {
                     }
                     return; // Salimos después de sugerir un número
                 }
+            }
+        }
+    }
+
+    // Método para deshacer el último movimiento
+    @FXML
+    private void handleUndo() {
+        if (historyPointer > 0) {
+            historyPointer--; // Mueve el puntero hacia atrás
+            restoreGridState(history.get(historyPointer)); // Restaura el estado anterior
+        } else {
+            // Muestra un mensaje si no hay nada que deshacer
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("No se puede deshacer");
+            alert.setContentText("No hay movimientos para deshacer");
+            alert.showAndWait();
+        }
+    }
+
+    // Método para agregar al historial
+    private void addToHistory() {
+        // Limita el tamaño del historial, elimina lo que haya posterior al puntero
+        if (historyPointer < history.size() -1) {
+            history.subList(historyPointer +1, history.size()).clear(); // Elimina el historial más allá del puntero
+        }
+        StringBuilder gridState = new StringBuilder();
+        for (int row = 0; row < 6; row++) {
+            for (int col = 0; col < 6; col++) {
+                TextField textField = (TextField) grid.getChildren().get(row * 6 + col);
+                gridState.append(textField.getText()).append(",");
+            }
+        }
+        history.add(gridState.toString()); // Guarda el estado de la cuadrícula
+        historyPointer++; // Mueve el puntero al nuevo elemento
+    }
+
+    // Método para restaurar el estado de la cuadrícula
+    private void restoreGridState(String state) {
+        String[] values = state.split(",");
+        for (int row = 0; row <6; row++) {
+            for (int col = 0; col < 6; col++) {
+                TextField textField = (TextField) grid.getChildren().get(row * 6 + col);
+                textField.setText(values[row * 6 + col]); // Restaura el texto de cada celda
             }
         }
     }
@@ -171,6 +217,8 @@ public class SudokuController {
     }
 
     private void validateGrid() {
+        // Agrega al historial antes de validar
+        addToHistory();
         // Matrices para verificar la existencia de números en filas, columnas y bloques 2x3
         boolean[][] rowCheck = new boolean[6][7]; // 6 filas y números del 1 al 6
         boolean[][] colCheck = new boolean[6][7]; // 6 columnas y números del 1 al 6
