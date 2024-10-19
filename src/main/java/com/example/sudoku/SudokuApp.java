@@ -14,8 +14,21 @@ public class SudokuApp extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("com/example/sudoku/view/SudokuView.fxml"));
+        // Imprime la ruta del archivo FXML para verificar que sí está bien referenciado
+        System.out.println(getClass().getResource("/com/example/sudoku/view/SudokuView.fxml"));
+
+        // Carga el archivo FXML
+        Parent root = FXMLLoader.load(getClass().getResource("/com/example/sudoku/view/SudokuView.fxml"));
         primaryStage.setTitle("Sudoku Game");
+
+//        // Establece tamaño mínimo para la ventana
+//        primaryStage.setMinWidth(600);
+//        primaryStage.setMinHeight(600);
+//
+//        // Establece tamaño inicial de la ventana
+//        primaryStage.setWidth(600);
+//        primaryStage.setHeight(600);
+
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
